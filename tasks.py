@@ -31,7 +31,7 @@ def dns(c, ip):
 @task
 def networks(c):
     local_networks = LocalNetworks()
-    result = [str(n) for n in local_networks.get_networks()] 
+    result = [str(n) for n in local_networks.get_networks()]
     print_result(result)
 
 
