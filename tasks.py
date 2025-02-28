@@ -10,32 +10,33 @@ from netscan.network import LocalNetworks
 from netscan.pings import LocalNetworkPings
 
 
+def print_result(result):
+    print(json.dumps(result, indent=4))
+
+
 @task
 def arp(c):
     collector = ArpCollector()
     result = collector.run()
-    print(json.dumps(result))
+    print_result(result)
 
 
 @task
 def dns(c, ip):
     resolver = ReverseDnsResolver()
     result = resolver.lookup(ip)
-    print(json.dumps(result))
+    print_result(result)
 
 
 @task
 def networks(c):
     local_networks = LocalNetworks()
-    print(
-        json.dumps(
-            [str(n) for n in local_networks.get_networks()]
-        )
-    )
+    result = [str(n) for n in local_networks.get_networks()] 
+    print_result(result)
 
 
 @task
 def pings(c, network):
     runner = LocalNetworkPings()
     result = runner.make(network)
-    print(json.dumps(result))
+    print_result(result)
